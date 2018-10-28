@@ -22,18 +22,18 @@ form = '''<!DOCTYPE html>
 '''
 
 
-class NameHandler(BaseHTTPRequestHandler):
+class AgeHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         # How long was the post data?
         length = int(self.headers.get('Content-length', 0))
 
         # Read and parse the post data
         data = self.rfile.read(length).decode()
-        yourname = parse_qs(data)["age"][0]
+        age = parse_qs(data)["age"][0]
 
         # Create cookie.
         c = cookies.SimpleCookie()
-        c['age'] = yourname
+        c['age'] = age
         c['age']['domain'] = 'localhost'
         c['age']['max-age'] = 70
 
@@ -74,5 +74,5 @@ class NameHandler(BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     server_address = ('', 8000)
-    httpd = HTTPServer(server_address, NameHandler)
+    httpd = HTTPServer(server_address, AgeHandler)
     httpd.serve_forever()
