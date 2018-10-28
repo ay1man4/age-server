@@ -24,10 +24,8 @@ form = '''<!DOCTYPE html>
 
 class AgeHandler(BaseHTTPRequestHandler):
     def do_POST(self):
-        # How long was the post data?
+    
         length = int(self.headers.get('Content-length', 0))
-
-        # Read and parse the post data
         data = self.rfile.read(length).decode()
         age = parse_qs(data)["age"][0]
 
@@ -44,13 +42,12 @@ class AgeHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        # Default message if we don't know a name.
+        
         message = "I don't know your age!"
 
         # Look for a cookie in the request.
         if 'cookie' in self.headers:
             try:
-                # Extract and decode the cookie.
                 c = cookies.SimpleCookie(self.headers['cookie'])
                 age = c['age'].value
 
